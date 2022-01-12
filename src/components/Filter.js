@@ -29,7 +29,7 @@ export default function Filter({
   }, [filterQueries]);
 
   return (
-    <div>
+    <div id="filter">
       <form onChange={handleSortBy}>
         <label for="sort_by-query">Sort by: </label>
         <select name="sort_by" id="sort_by-query">

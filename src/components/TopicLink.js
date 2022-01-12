@@ -12,13 +12,17 @@ export default function TopicLink({
   const selectTopic = (event) => {
     event.preventDefault();
     setTopic(topic);
+    setTopic({
+      ...topic,
+      slug: topic.slug.charAt(0).toUpperCase() + topic.slug.slice(1),
+    });
     setFilterQueries({ ...filterQueries, topic: topic.slug });
     navigate("/");
   };
 
   return (
     <a href="" onClick={selectTopic}>
-      <li>{topic.slug}</li>
+      <li>{topic.slug.charAt(0).toUpperCase() + topic.slug.slice(1)}</li>
     </a>
   );
 }

@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
 import "./App.css";
 import ArticlePage from "./components/ArticlePage";
@@ -7,6 +7,7 @@ import { fetchTopics } from "./utils";
 import Login from "./components/Login";
 
 function App() {
+  const [isLoading, setIsLoading] = useState(false);
   const [topicsList, setTopicsList] = useState([]);
   const [topic, setTopic] = useState({ slug: "", description: "" });
   const [filterQueries, setFilterQueries] = useState({
@@ -19,6 +20,10 @@ function App() {
     avatar: "",
     name: "",
   });
+
+  var today = new Date();
+  var date =
+    today.getDate() + "-" + (today.getMonth() + 1) + "-" + today.getFullYear();
 
   useEffect(() => {
     fetchTopics()
@@ -37,13 +42,19 @@ function App() {
 
   return (
     <div className="App">
-      <h1>nc-news</h1>
+      <header>
+        <h1>NC News</h1>
+        <p>Forward with the people</p>
+        <time>{date}</time>
+      </header>
       <BrowserRouter>
         <Routes>
           <Route
             path="/"
             element={
               <MasterPage
+                isLoading={isLoading}
+                setIsLoading={setIsLoading}
                 topicsList={topicsList}
                 topic={topic}
                 setTopic={setTopic}
@@ -57,6 +68,8 @@ function App() {
             path="/articles/:articleID"
             element={
               <ArticlePage
+                isLoading={isLoading}
+                setIsLoading={setIsLoading}
                 topicsList={topicsList}
                 setTopic={setTopic}
                 filterQueries={filterQueries}

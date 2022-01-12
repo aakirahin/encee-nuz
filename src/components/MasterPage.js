@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { fetchArticles } from "../utils";
-import ArticleCard from "./ArticleCard";
 import Filter from "./Filter";
 import TopicsSideBar from "./TopicsSideBar";
+import BackLink from "./BackLink";
+import ScrollToTop from "./ScrollToTop";
 
 export default function MasterPage({
+  isLoading,
+  setIsLoading,
   topicsList,
   topic,
   setTopic,
@@ -13,7 +16,6 @@ export default function MasterPage({
   setFilterQueries,
   resetTopic,
 }) {
-  const [isLoading, setIsLoading] = useState(false);
   const [articlesList, setArticlesList] = useState([]);
 
   useEffect(() => {
@@ -33,15 +35,13 @@ export default function MasterPage({
   }, []);
 
   return (
-    <div>
+    <div id="articles">
       {topic.slug === "" ? (
         <h2>Articles</h2>
       ) : (
         <>
           <h2>{topic.slug}</h2> <h3>{topic.description}</h3>
-          <Link to="/" onClick={resetTopic}>
-            Back
-          </Link>
+          <BackLink resetTopic={resetTopic} />
           <Filter
             filterQueries={filterQueries}
             setFilterQueries={setFilterQueries}
@@ -50,14 +50,19 @@ export default function MasterPage({
         </>
       )}
       {isLoading ? (
-        "Loading..."
+        <p>Loading...</p>
       ) : (
         <ul>
           {articlesList.map((article) => {
             return (
-              <Link to={`/articles/${article.article_id}`}>
-                <ArticleCard article={article} />
-              </Link>
+              <li>
+                <Link to={`/articles/${article.article_id}`}>
+                  <p>{article.title}</p>
+                </Link>
+                <p>
+                  {article.author}, {article.created_at.substring(0, 9)}
+                </p>
+              </li>
             );
           })}
         </ul>
@@ -68,6 +73,7 @@ export default function MasterPage({
         filterQueries={filterQueries}
         setFilterQueries={setFilterQueries}
       />
+      <ScrollToTop />
     </div>
   );
 }

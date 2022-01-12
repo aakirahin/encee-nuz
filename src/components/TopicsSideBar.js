@@ -7,7 +7,7 @@ export default function TopicsSideBar({
   setFilterQueries,
 }) {
   return (
-    <div>
+    <div id="side-bar">
       <h3>Topics</h3>
       <ul>
         {topicsList.map((topic) => {
