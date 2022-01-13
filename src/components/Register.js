@@ -42,7 +42,7 @@ export default function Register(props) {
   };
 
   return (
-    <div>
+    <div id="register">
       <h1>Register</h1>
       <form onSubmit={handleRegister}>
         <label for="username">Username: </label>
@@ -63,19 +63,20 @@ export default function Register(props) {
           required
         />
         <br />
-        <label for="avatar">Avatar: </label>
+        <label for="avatar-url">Avatar URL: </label>
         <input
-          type="file"
-          id="avatar"
+          type="text"
+          id="avatar-url"
           value={newUser.avatar_url}
           onChange={handleAvatarInput}
-          accept="image/*"
         />
         <br />
-        <button type="submit">Register</button>
+        <button type="submit">Join us!</button>
       </form>
       {registrationError ? <p>Username already exists.</p> : null}
-      <Link to="/login">Already have an account?</Link>
+      <div className="login-link">
+        <Link to="/login">Already have an account?</Link>
+      </div>
     </div>
   );
 }

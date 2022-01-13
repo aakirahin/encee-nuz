@@ -23,11 +23,9 @@ export default function Profile({ resetTopic }) {
 
   const changeAvatar = (event) => {
     event.preventDefault();
-    patchUserAvatar(currentUser.username, newAvatar)
-      .then((response) => console.log(response, newAvatar))
-      .catch((err) => {
-        console.log(err);
-      });
+    patchUserAvatar(currentUser.username, newAvatar).catch((err) => {
+      console.log(err);
+    });
     setAvatarClicked(false);
   };
 
@@ -48,24 +46,25 @@ export default function Profile({ resetTopic }) {
         <>
           <form onSubmit={changeAvatar}>
             <input
-              type="file"
+              type="text"
               id="new-avatar"
               value={newAvatar}
               onChange={(event) => setNewAvatar(event.target.value)}
-              accept="image/*"
             />
             <button type="submit">Change avatar</button>
           </form>
           <button onClick={() => setAvatarClicked(false)}>Cancel</button>
         </>
       )}
-      <h2>{currentUser.name}</h2>
+      <h2 id="name">{currentUser.name}</h2>
+      <p id="username">{currentUser.username}</p>
       {userArticles.length !== 0 ? (
         <div id="user-articles">
+          <h2>Your articles</h2>
           <ul>
             {userArticles.map((article) => {
               return (
-                <li>
+                <li className="user-article">
                   <Link to={`/articles/${article.article_id}`}>
                     <p>{article.title}</p>
                   </Link>

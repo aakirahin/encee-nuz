@@ -29,8 +29,8 @@ export default function Login(props) {
   };
 
   return (
-    <div>
-      <h1>Login</h1>
+    <div id="login">
+      <h1>Welcome back!</h1>
       <form onSubmit={handleLogin}>
         <label for="username">Username: </label>
         <input
@@ -40,10 +40,12 @@ export default function Login(props) {
           onChange={handleUsernameInput}
           required
         />
-        <button type="submit">Login</button>
+        <button type="submit">Let's gooo!</button>
       </form>
       {loginError ? <p>Username does not exist.</p> : null}
-      <Link to="/register">Sign up today!</Link>
+      <div className="register-link">
+        <Link to="/register">Don't have an account?</Link>
+      </div>
     </div>
   );
 }

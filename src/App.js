@@ -43,7 +43,7 @@ function App() {
       <div className="App">
         <header>
           <h1>NC News</h1>
-          <p>Forward with the people</p>
+          <p>Strive To Be More Informed</p>
           <time>{date}</time>
         </header>
         <BrowserRouter>
