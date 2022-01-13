@@ -9,7 +9,7 @@ export default function Profile({ resetTopic }) {
   const [userArticles, setUserArticles] = useState([]);
   const [avatarClicked, setAvatarClicked] = useState(false);
   const [newAvatar, setNewAvatar] = useState("");
-  const { currentUser } = useCurrentUser();
+  const { currentUser, logOut } = useCurrentUser();
 
   useEffect(() => {
     fetchArticlesByUser(currentUser.username)
@@ -58,6 +58,9 @@ export default function Profile({ resetTopic }) {
       )}
       <h2 id="name">{currentUser.name}</h2>
       <p id="username">{currentUser.username}</p>
+      <Link id="sign-out" to="/" onClick={logOut}>
+        Sign out
+      </Link>
       {userArticles.length !== 0 ? (
         <div id="user-articles">
           <h2>Your articles</h2>
