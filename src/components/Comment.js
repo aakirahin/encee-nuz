@@ -68,7 +68,8 @@ export default function Comment({ comment, comments, setComments }) {
   return (
     <li>
       <p>
-        <strong>{comment.author}</strong> {comment.created_at.substring(0, 9)}
+        <strong>{comment.author} </strong>
+        <i>{comment.created_at.substring(0, 9)} </i>
         {currentUser.username === comment.author ? (
           <>
             <button onClick={() => setEdit(true)}>Edit</button>
@@ -92,8 +93,14 @@ export default function Comment({ comment, comments, setComments }) {
       ) : (
         <p>{comment.body}</p>
       )}
-      <p>
-        {commentVotes} <button onClick={handleCommentVotes}>Agreed!</button>
+      <p className="comment-votes">
+        {commentVotes}{" "}
+        <button
+          className={commentVotesClick.length % 2 ? "voted" : "unvoted"}
+          onClick={handleCommentVotes}
+        >
+          Agreed!
+        </button>
       </p>
     </li>
   );

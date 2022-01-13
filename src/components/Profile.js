@@ -19,7 +19,7 @@ export default function Profile({ resetTopic }) {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [currentUser]);
 
   const changeAvatar = (event) => {
     event.preventDefault();

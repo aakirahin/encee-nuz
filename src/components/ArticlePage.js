@@ -54,7 +54,7 @@ export default function ArticlePage({
       });
   }, []);
 
-  const handleArticleVotes = () => {
+  const handleArticleVotes = (event) => {
     if (!loggedIn) {
       navigate("/login");
       return;
@@ -104,15 +104,15 @@ export default function ArticlePage({
         <p>Loading...</p>
       ) : (
         <div className="article">
+          <h2>{article.title}</h2>
+          <h3>
+            {article.author}, {articleDate}
+          </h3>
           {currentUser.username === article.author ? (
             <button onClick={() => setEditArticle(true)} disabled={editArticle}>
               Edit
             </button>
           ) : null}
-          <h2>{article.title}</h2>
-          <h3>
-            {article.author}, {articleDate}
-          </h3>
           {editArticle ? (
             <>
               <form onSubmit={submitArticleEdit}>
@@ -129,8 +129,16 @@ export default function ArticlePage({
           ) : (
             <p>{article.body}</p>
           )}
-          <strong>{articleVotes} </strong>
-          <button onClick={handleArticleVotes}>Nice!</button>
+          <br />
+          <div className="article-votes">
+            <strong>{articleVotes} </strong>
+            <button
+              className={articleVotesClick.length % 2 ? "voted" : "unvoted"}
+              onClick={handleArticleVotes}
+            >
+              Nice!
+            </button>
+          </div>
           <ul className="comments-section">
             <h3>Comments • {article.comment_count}</h3>
             <NewComment

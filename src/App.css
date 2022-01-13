@@ -208,4 +208,24 @@ a:active {
   #profile .avatar:hover + #edit-message {
     display: block;
   }
+
+  .article .article-votes button,
+  .comment-votes button {
+    width: auto;
+    line-height: 25px;
+    border: 1px solid black;
+    border-radius: 100px;
+    background-color: black;
+    color: white;
+    font-weight: bold;
+    margin: 10px;
+  }
+
+  .article .article-votes button:hover,
+  .article .article-votes .voted,
+  .comment-votes button:hover,
+  .comment-votes .voted {
+    background-color: white;
+    color: black;
+  }
 }
