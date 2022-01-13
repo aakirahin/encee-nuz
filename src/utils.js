@@ -28,6 +28,12 @@ export const fetchArticles = (
     });
 };
 
+export const fetchArticlesByUser = (username) => {
+  return myApi.get(`articles`).then((res) => {
+    return res.data.articles.filter((article) => article.author === username);
+  });
+};
+
 export const fetchArticleComments = (articleID) => {
   return myApi.get(`/articles/${articleID}/comments`).then((res) => {
     return res.data.comments;
@@ -44,6 +50,10 @@ export const patchArticleVotes = (articleID, vote) => {
   return myApi.patch(`/articles/${articleID}`, { inc_votes: vote });
 };
 
+export const patchArticleBody = (articleID, body) => {
+  return myApi.patch(`/articles/${articleID}`, { body: body });
+};
+
 export const patchCommentVotes = (commentID, username, vote) => {
   return myApi.patch(`/comments/${commentID}`, {
     username: username,
@@ -58,8 +68,12 @@ export const patchCommentBody = (commentID, username, body) => {
   });
 };
 
+export const patchUserAvatar = (username, avatar_url) => {
+  return myApi.patch(`/users/${username}`, { avatar_url: avatar_url });
+};
+
 export const deleteComment = (commentID) => {
-  return myApi.delete(`/comments/${commentID}`).then((res) => {});
+  return myApi.delete(`/comments/${commentID}`);
 };
 
 export const postUser = (username, name, avatar) => {

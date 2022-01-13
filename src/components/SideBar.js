@@ -14,9 +14,16 @@ export default function SideBar({
     <div id="sidebar">
       {loggedIn ? (
         <div className="sidebar-profile">
-          <img src={currentUser.avatar_url} alt="avatar" width="150" />
-          <p>{currentUser.username}</p>
-          <Link to="/" onClick={logOut}>
+          <Link to="/profile">
+            <img
+              className="avatar"
+              src={currentUser.avatar_url}
+              alt="avatar"
+              width="150"
+            />
+            <p>{currentUser.username}</p>
+          </Link>
+          <Link id="sign-out" to="/" onClick={logOut}>
             Sign out
           </Link>
         </div>

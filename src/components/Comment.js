@@ -2,11 +2,13 @@ import React from "react";
 import { useNavigate } from "react-router";
 import { useState } from "react/cjs/react.development";
 import { useCurrentUser } from "../context/UserContext";
-import { patchCommentVotes, deleteComment } from "../utils";
+import { patchCommentVotes, deleteComment, patchCommentBody } from "../utils";
 
-export default function Comment({ comment }) {
+export default function Comment({ comment, comments, setComments }) {
   const [commentVotes, setCommentVotes] = useState(comment.votes);
   const [commentVotesClick, setCommentVotesClick] = useState([]);
+  const [edit, setEdit] = useState(false);
+  const [editedComment, setEditedComment] = useState(comment.body);
   const { currentUser, loggedIn } = useCurrentUser();
   let navigate = useNavigate();
 
@@ -34,12 +36,33 @@ export default function Comment({ comment }) {
     setCommentVotesClick([...commentVotesClick, "clicked"]);
   };
 
-  const handleDeletion = (commentID) => {
-    deleteComment(commentID)
+  const handleDeletion = () => {
+    deleteComment(comment.comment_id)
       .then((response) => {
-        console.log(response);
+        setComments((...currentComments) => {
+          return currentComments.filter(
+            (eachComment) => eachComment !== comment.comment_id
+          );
+        });
       })
-      .catch((err) => {});
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handleCommentEdit = (event) => {
+    setEditedComment(event.target.value);
+  };
+
+  const editComment = (event) => {
+    event.preventDefault();
+    patchCommentBody(comment.comment_id, currentUser.username, editedComment)
+      .then((response) => {
+        setEdit(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -48,12 +71,27 @@ export default function Comment({ comment }) {
         <strong>{comment.author}</strong> {comment.created_at.substring(0, 9)}
         {currentUser.username === comment.author ? (
           <>
-            <button>Edit</button>
-            <button onClick={handleDeletion(comment.comment_id)}>Delete</button>
+            <button onClick={() => setEdit(true)}>Edit</button>
+            <button onClick={handleDeletion}>Delete</button>
           </>
         ) : null}
       </p>
-      <p>{comment.body}</p>
+      {edit ? (
+        <>
+          <form onSubmit={editComment}>
+            <input
+              type="text"
+              id="edited-comment"
+              value={editedComment}
+              onChange={handleCommentEdit}
+            />
+            <button type="submit">Update</button>
+          </form>
+          <button onClick={() => setEdit(false)}>Cancel</button>
+        </>
+      ) : (
+        <p>{comment.body}</p>
+      )}
       <p>
         {commentVotes} <button onClick={handleCommentVotes}>Agreed!</button>
       </p>

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router";
 import { useCurrentUser } from "../context/UserContext";
 import { postComment } from "../utils";
 
-export default function NewComment({ articleID }) {
+export default function NewComment({ articleID, comments, setComments }) {
   const [newComment, setNewComment] = useState("");
   const [commentError, setCommentError] = useState(false);
   const { currentUser, loggedIn } = useCurrentUser();
@@ -21,10 +21,14 @@ export default function NewComment({ articleID }) {
     }
 
     event.preventDefault();
-    postComment(articleID, currentUser.username, newComment).catch((err) => {
-      console.log(err);
-      setCommentError(true);
-    });
+    postComment(articleID, currentUser.username, newComment)
+      .then((response) => {
+        // setComments([response, ...comments]);
+      })
+      .catch((err) => {
+        console.log(err);
+        setCommentError(true);
+      });
   };
 
   return (

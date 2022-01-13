@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router";
 import {
   fetchArticleByID,
   fetchArticleComments,
+  patchArticleBody,
   patchArticleVotes,
 } from "../utils";
 import Comment from "./Comment";
@@ -27,7 +28,9 @@ export default function ArticlePage({
   const [articleVotes, setArticleVotes] = useState(0);
   const [articleVotesClick, setArticleVotesClick] = useState([]);
   const [comments, setComments] = useState([]);
-  const { loggedIn } = useCurrentUser();
+  const [editArticle, setEditArticle] = useState(false);
+  const [editedArticle, setEditedArticle] = useState(article.body);
+  const { loggedIn, currentUser } = useCurrentUser();
   let navigate = useNavigate();
 
   useEffect(() => {
@@ -73,6 +76,21 @@ export default function ArticlePage({
     setArticleVotesClick([...articleVotesClick, "clicked"]);
   };
 
+  const handleArticleEdit = (event) => {
+    setEditedArticle(event.target.value);
+  };
+
+  const submitArticleEdit = (event) => {
+    event.preventDefault();
+    patchArticleBody(articleID, editedArticle)
+      .then((response) => {
+        setEditArticle(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div>
       <SideBar
@@ -86,17 +104,48 @@ export default function ArticlePage({
         <p>Loading...</p>
       ) : (
         <div className="article">
+          {currentUser.username === article.author ? (
+            <button onClick={() => setEditArticle(true)} disabled={editArticle}>
+              Edit
+            </button>
+          ) : null}
           <h2>{article.title}</h2>
           <h3>
             {article.author}, {articleDate}
           </h3>
-          <p>{article.body}</p>
-          <button onClick={handleArticleVotes}>{articleVotes} votes</button>
+          {editArticle ? (
+            <>
+              <form onSubmit={submitArticleEdit}>
+                <input
+                  type="text"
+                  id="edited-article"
+                  value={editedArticle}
+                  onChange={handleArticleEdit}
+                />
+                <button type="submit">Update</button>
+              </form>
+              <button onClick={() => setEditArticle(false)}>Cancel</button>
+            </>
+          ) : (
+            <p>{article.body}</p>
+          )}
+          <strong>{articleVotes} </strong>
+          <button onClick={handleArticleVotes}>Nice!</button>
           <ul className="comments-section">
             <h3>Comments • {article.comment_count}</h3>
-            <NewComment articleID={articleID} />
+            <NewComment
+              articleID={articleID}
+              comments={comments}
+              setComments={setComments}
+            />
             {comments.map((comment) => {
-              return <Comment comment={comment} />;
+              return (
+                <Comment
+                  comment={comment}
+                  comments={comments}
+                  setComments={setComments}
+                />
+              );
             })}
           </ul>
         </div>
