@@ -228,4 +228,51 @@ a:active {
     background-color: white;
     color: black;
   }
+
+  #new-comment #comment-avatar {
+    display: inline-block;
+    border-radius: 50%;
+  }
+
+  #new-comment input {
+    display: inline-block;
+    width: 90%;
+    height: 100px;
+    padding: 12px 20px;
+    margin: 5px 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  #new-comment button {
+    float: right;
+    margin: 5px 3%;
+    border: 1px solid black;
+    border-radius: 50px;
+    background-color: white;
+    line-height: 25px;
+    font-weight: bold;
+  }
+
+  #new-comment button:active {
+    background-color: black;
+    color: white;
+  }
+
+  #comment {
+    margin-top: 50px;
+  }
+
+  #edit-article {
+    position: absolute;
+    top: 240px;
+    right: 400px;
+    width: 50px;
+    border: 1px solid black;
+    border-radius: 50px;
+    background-color: black;
+    color: white;
+    line-height: 25px;
+    font-weight: bold;
+  }
 }

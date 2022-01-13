@@ -32,12 +32,18 @@ export default function NewComment({ articleID, comments, setComments }) {
   };
 
   return (
-    <div>
+    <div id="new-comment">
       <form onSubmit={handleNewComment}>
         {loggedIn ? (
-          <img src={currentUser.avatar_url} alt="avatar" width="50" />
+          <img
+            id="comment-avatar"
+            src={currentUser.avatar_url}
+            alt="avatar"
+            width="50"
+          />
         ) : (
           <img
+            id="comment-avatar"
             src="https://www.acumarketing.com/acupuncture-websites/wp-content/uploads/2020/01/anonymous-avatar-sm.jpg"
             alt="avatar"
             width="50"

@@ -109,7 +109,11 @@ export default function ArticlePage({
             {article.author}, {articleDate}
           </h3>
           {currentUser.username === article.author ? (
-            <button onClick={() => setEditArticle(true)} disabled={editArticle}>
+            <button
+              id="edit-article"
+              onClick={() => setEditArticle(true)}
+              disabled={editArticle}
+            >
               Edit
             </button>
           ) : null}

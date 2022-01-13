@@ -66,7 +66,7 @@ export default function Comment({ comment, comments, setComments }) {
   };
 
   return (
-    <li>
+    <li id="comment">
       <p>
         <strong>{comment.author} </strong>
         <i>{comment.created_at.substring(0, 9)} </i>
