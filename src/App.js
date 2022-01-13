@@ -5,6 +5,9 @@ import ArticlePage from "./components/ArticlePage";
 import MasterPage from "./components/MasterPage";
 import { fetchTopics } from "./utils";
 import Login from "./components/Login";
+import Register from "./components/Register";
+import Profile from "./components/Profile";
+import { UserProvider } from "./context/UserContext";
 
 function App() {
   const [isLoading, setIsLoading] = useState(false);
@@ -14,11 +17,6 @@ function App() {
     sort_by: "created_at",
     order: "desc",
     topic: "",
-  });
-  const [currentUser, setCurrentUser] = useState({
-    username: "",
-    avatar: "",
-    name: "",
   });
 
   var today = new Date();
@@ -41,55 +39,54 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <header>
-        <h1>NC News</h1>
-        <p>Forward with the people</p>
-        <time>{date}</time>
-      </header>
-      <BrowserRouter>
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <MasterPage
-                isLoading={isLoading}
-                setIsLoading={setIsLoading}
-                topicsList={topicsList}
-                topic={topic}
-                setTopic={setTopic}
-                filterQueries={filterQueries}
-                setFilterQueries={setFilterQueries}
-                resetTopic={resetTopic}
-              />
-            }
-          />
-          <Route
-            path="/articles/:articleID"
-            element={
-              <ArticlePage
-                isLoading={isLoading}
-                setIsLoading={setIsLoading}
-                topicsList={topicsList}
-                setTopic={setTopic}
-                filterQueries={filterQueries}
-                setFilterQueries={setFilterQueries}
-                resetTopic={resetTopic}
-              />
-            }
-          />
-          <Route
-            path="/login"
-            element={
-              <Login
-                currentUser={currentUser}
-                setCurrentUser={setCurrentUser}
-              />
-            }
-          />
-        </Routes>
-      </BrowserRouter>
-    </div>
+    <UserProvider>
+      <div className="App">
+        <header>
+          <h1>NC News</h1>
+          <p>Forward with the people</p>
+          <time>{date}</time>
+        </header>
+        <BrowserRouter>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <MasterPage
+                  isLoading={isLoading}
+                  setIsLoading={setIsLoading}
+                  topicsList={topicsList}
+                  topic={topic}
+                  setTopic={setTopic}
+                  filterQueries={filterQueries}
+                  setFilterQueries={setFilterQueries}
+                  resetTopic={resetTopic}
+                />
+              }
+            />
+            <Route
+              path="/articles/:articleID"
+              element={
+                <ArticlePage
+                  isLoading={isLoading}
+                  setIsLoading={setIsLoading}
+                  topicsList={topicsList}
+                  setTopic={setTopic}
+                  filterQueries={filterQueries}
+                  setFilterQueries={setFilterQueries}
+                  resetTopic={resetTopic}
+                />
+              }
+            />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route
+              path="/profile"
+              element={<Profile resetTopic={resetTopic} />}
+            />
+          </Routes>
+        </BrowserRouter>
+      </div>
+    </UserProvider>
   );
 }
 

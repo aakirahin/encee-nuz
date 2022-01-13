@@ -1,13 +1,11 @@
 body {
   font-family: "Times New Roman", Times, serif;
-  margin: 0 100px 0 100px;
-  font-size: 1.2rem;
+  margin: 0 15px 0 15px;
 }
 
 header {
-  border-bottom: 5px double black;
-  padding-bottom: 10px;
-  font-size: 1.2rem;
+  border-bottom: 1px double black;
+  padding-bottom: 5px;
 }
 
 header h1,
@@ -17,12 +15,12 @@ header p {
 }
 
 header h1 {
-  font-size: 4rem;
+  font-size: 3rem;
 }
 
 header p {
   font-style: italic;
-  letter-spacing: 2.5px;
+  letter-spacing: 2px;
 }
 
 header time {
@@ -34,27 +32,17 @@ ul {
   list-style: none;
 }
 
-#side-bar {
-  width: 120px;
-  position: fixed;
-  top: 200px;
-  right: 100px;
+#sidebar ul {
+  margin-top: 5px;
 }
 
-#side-bar h3 {
-  margin: 0 0 20px 0;
+#sidebar h3 {
+  margin: 35px 0 0 0;
+  padding-bottom: 0px;
 }
 
-#side-bar ul {
-  margin: 0px;
-}
-
-#side-bar li {
-  padding-bottom: 4px;
-}
-
-#side-bar a {
-  font-weight: lighter;
+#sidebar p {
+  margin: 0 0 5px 0;
 }
 
 a {
@@ -63,18 +51,30 @@ a {
   color: black;
 }
 
-a:hover {
+a:active {
   text-decoration: underline;
   color: steelblue;
 }
 
-#articles h2 {
-  font-style: italic;
-  margin: 20px 0 10px 0;
+.article,
+#articles {
+  width: 370px;
 }
 
-#articles h3 {
-  margin: 0 0 10px 0;
+#articles h2 {
+  margin: 20px 0 5px 0;
+}
+
+#articles #topic-description {
+  font-style: italic;
+  font-weight: lighter;
+  margin: 0 0 5px 0;
+}
+
+#articles-list li {
+  padding-bottom: 5px;
+  margin-bottom: 5px;
+  border-bottom: 1px solid black;
 }
 
 #filter {
@@ -83,23 +83,111 @@ a:hover {
 
 #filter form {
   display: inline-block;
-  margin-right: 20px;
-}
-
-.article {
-  width: 1000px;
+  margin-right: 10px;
 }
 
 #back {
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .comments-section {
   border-top: 1px solid black;
 }
 
-#scroll-to-top {
-  position: fixed;
-  bottom: 25px;
-  right: 150px;
+@media only screen and (max-width: 500px) {
+  #sidebar h3 {
+    display: none;
+  }
+
+  #sidebar li {
+    display: inline-block;
+    margin: 0 32px 0 32px;
+  }
+
+  #scroll-to-top {
+    display: none;
+  }
+}
+
+@media only screen and (min-width: 500px) {
+  body {
+    margin: 0 15px 0 15px;
+  }
+
+  #sidebar {
+    position: fixed;
+    width: 100px;
+    top: 150px;
+    right: 5px;
+  }
+
+  #sidebar a {
+    font-weight: lighter;
+  }
+
+  #sidebar li {
+    padding-bottom: 4px;
+  }
+
+  .article {
+    width: 75%;
+  }
+
+  #articles-list li {
+    width: 120%;
+  }
+
+  #scroll-to-top {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  body {
+    font-size: 1.2rem;
+    margin: 0 100px 0 100px;
+  }
+
+  header {
+    border-bottom: 5px double black;
+    padding-bottom: 10px;
+    font-size: 1.2rem;
+  }
+
+  header h1 {
+    font-size: 4rem;
+  }
+
+  header p {
+    letter-spacing: 2.5px;
+  }
+
+  #sidebar {
+    width: 120px;
+    top: 200px;
+    right: 150px;
+  }
+
+  a:hover {
+    text-decoration: underline;
+    color: steelblue;
+  }
+
+  .article {
+    width: 85%;
+  }
+
+  #articles-list li {
+    width: 380%;
+  }
+
+  #articles h2 {
+    margin: 20px 0 10px 0;
+  }
+
+  #articles h3 {
+    padding-bottom: 10px;
+  }
 }

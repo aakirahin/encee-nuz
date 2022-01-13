@@ -1,14 +1,16 @@
 import { React, useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import {
   fetchArticleByID,
   fetchArticleComments,
   patchArticleVotes,
 } from "../utils";
 import Comment from "./Comment";
-import TopicsSideBar from "./TopicsSideBar";
+import SideBar from "./SideBar";
 import BackLink from "./BackLink";
 import ScrollToTop from "./ScrollToTop";
+import { useCurrentUser } from "../context/UserContext";
+import NewComment from "./NewComment";
 
 export default function ArticlePage({
   isLoading,
@@ -25,6 +27,8 @@ export default function ArticlePage({
   const [articleVotes, setArticleVotes] = useState(0);
   const [articleVotesClick, setArticleVotesClick] = useState([]);
   const [comments, setComments] = useState([]);
+  const { loggedIn } = useCurrentUser();
+  let navigate = useNavigate();
 
   useEffect(() => {
     setIsLoading(true);
@@ -48,6 +52,11 @@ export default function ArticlePage({
   }, []);
 
   const handleArticleVotes = () => {
+    if (!loggedIn) {
+      navigate("/login");
+      return;
+    }
+
     let inc_vote = 1;
     if (articleVotesClick.length % 2) {
       inc_vote = -1;
@@ -66,6 +75,12 @@ export default function ArticlePage({
 
   return (
     <div>
+      <SideBar
+        topicsList={topicsList}
+        setTopic={setTopic}
+        filterQueries={filterQueries}
+        setFilterQueries={setFilterQueries}
+      />
       <BackLink resetTopic={resetTopic} />
       {isLoading ? (
         <p>Loading...</p>
@@ -79,18 +94,13 @@ export default function ArticlePage({
           <button onClick={handleArticleVotes}>{articleVotes} votes</button>
           <ul className="comments-section">
             <h3>Comments • {article.comment_count}</h3>
+            <NewComment articleID={articleID} />
             {comments.map((comment) => {
               return <Comment comment={comment} />;
             })}
           </ul>
         </div>
       )}
-      <TopicsSideBar
-        topicsList={topicsList}
-        setTopic={setTopic}
-        filterQueries={filterQueries}
-        setFilterQueries={setFilterQueries}
-      />
       <ScrollToTop />
     </div>
   );

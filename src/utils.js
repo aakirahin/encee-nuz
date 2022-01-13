@@ -50,3 +50,33 @@ export const patchCommentVotes = (commentID, username, vote) => {
     inc_votes: vote,
   });
 };
+
+export const patchCommentBody = (commentID, username, body) => {
+  return myApi.patch(`/comments/${commentID}`, {
+    username: username,
+    body: body,
+  });
+};
+
+export const deleteComment = (commentID) => {
+  return myApi.delete(`/comments/${commentID}`).then((res) => {});
+};
+
+export const postUser = (username, name, avatar) => {
+  return myApi
+    .post(`/users`, {
+      username: username,
+      name: name,
+      avatar: avatar,
+    })
+    .then((res) => {
+      return res.data.user;
+    });
+};
+
+export const postComment = (articleID, username, body) => {
+  return myApi.post(`/articles/${articleID}/comments`, {
+    username: username,
+    body: body,
+  });
+};

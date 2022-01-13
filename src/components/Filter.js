@@ -5,6 +5,7 @@ export default function Filter({
   filterQueries,
   setFilterQueries,
   setArticlesList,
+  setIsLoading,
 }) {
   const handleSortBy = (event) => {
     setFilterQueries({ ...filterQueries, sort_by: event.target.value });
@@ -15,6 +16,7 @@ export default function Filter({
   };
 
   useEffect(() => {
+    setIsLoading(true);
     fetchArticles(
       filterQueries.topic,
       filterQueries.sort_by,
@@ -22,6 +24,7 @@ export default function Filter({
     )
       .then((response) => {
         setArticlesList(response);
+        setIsLoading(false);
       })
       .catch((err) => {
         console.log(err);

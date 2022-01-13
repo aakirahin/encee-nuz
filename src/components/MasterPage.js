@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { fetchArticles } from "../utils";
 import Filter from "./Filter";
-import TopicsSideBar from "./TopicsSideBar";
+import SideBar from "./SideBar";
 import BackLink from "./BackLink";
 import ScrollToTop from "./ScrollToTop";
 
@@ -19,6 +19,7 @@ export default function MasterPage({
   const [articlesList, setArticlesList] = useState([]);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     setIsLoading(true);
     fetchArticles(
       filterQueries.topic,
@@ -36,23 +37,31 @@ export default function MasterPage({
 
   return (
     <div id="articles">
+      <SideBar
+        topicsList={topicsList}
+        setTopic={setTopic}
+        filterQueries={filterQueries}
+        setFilterQueries={setFilterQueries}
+      />
       {topic.slug === "" ? (
         <h2>Articles</h2>
       ) : (
         <>
-          <h2>{topic.slug}</h2> <h3>{topic.description}</h3>
+          <h2 id="topic-name">{topic.slug}</h2>{" "}
+          <h3 id="topic-description">{topic.description}</h3>
           <BackLink resetTopic={resetTopic} />
           <Filter
             filterQueries={filterQueries}
             setFilterQueries={setFilterQueries}
             setArticlesList={setArticlesList}
+            setIsLoading={setIsLoading}
           />
         </>
       )}
       {isLoading ? (
         <p>Loading...</p>
       ) : (
-        <ul>
+        <ul id="articles-list">
           {articlesList.map((article) => {
             return (
               <li>
@@ -67,12 +76,6 @@ export default function MasterPage({
           })}
         </ul>
       )}
-      <TopicsSideBar
-        topicsList={topicsList}
-        setTopic={setTopic}
-        filterQueries={filterQueries}
-        setFilterQueries={setFilterQueries}
-      />
       <ScrollToTop />
     </div>
   );
