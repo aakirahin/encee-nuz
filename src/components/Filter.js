@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { fetchArticles } from "../utils";
 
 export default function Filter({
@@ -30,21 +30,17 @@ export default function Filter({
   return (
     <div id="filter">
       <form onChange={handleSortBy}>
-        <label for="sort_by-query">Sort by: </label>
-        <select name="sort_by" id="sort_by-query">
-          <option value="created_at" selected>
-            Publish date
-          </option>
+        <label className="sort_by-query">Sort by: </label>
+        <select name="sort_by" id="sort_by-query" defaultValue={"created_at"}>
+          <option value="created_at">Publish date</option>
           <option value="votes">Popularity</option>
         </select>
       </form>
       <form onChange={handleOrder}>
-        <label for="order-query">In this order: </label>
-        <select name="order" id="order-query">
+        <label className="order-query">In this order: </label>
+        <select name="order" id="order-query" defaultValue={"desc"}>
           <option value="asc">Ascending</option>
-          <option value="desc" selected>
-            Descending
-          </option>
+          <option value="desc">Descending</option>
         </select>
       </form>
     </div>

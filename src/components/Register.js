@@ -5,11 +5,17 @@ import { fetchUser, postUser } from "../utils";
 import { Link } from "react-router-dom";
 import { useCurrentUser } from "../context/UserContext";
 import BackLink from "./BackLink";
+import urlRegex from "url-regex";
 
 export default function Register({ resetTopic }) {
-  const [newUser, setNewUser] = useState({});
+  const [newUser, setNewUser] = useState({
+    username: "",
+    name: "",
+    avatar_url: "",
+  });
   const [registrationError, setRegistrationError] = useState(false);
-  const { currentUser, setCurrentUser } = useCurrentUser();
+  const [avatarError, setAvatarError] = useState(false);
+  const { setCurrentUser } = useCurrentUser();
   let navigate = useNavigate();
 
   const handleUsernameInput = (event) => {
@@ -22,18 +28,24 @@ export default function Register({ resetTopic }) {
   };
 
   const handleAvatarInput = (event) => {
+    setAvatarError(false);
     setNewUser({ ...newUser, avatar_url: event.target.value });
   };
 
   const handleRegister = (event) => {
     event.preventDefault();
+
+    if (!urlRegex().test(event.target.value)) {
+      setAvatarError(true);
+    }
+
     postUser(newUser.username, newUser.name, newUser.avatar_url)
       .then((response) => {
         return fetchUser(response.username);
       })
       .then((response) => {
         setCurrentUser(response);
-        navigate(`/profile/${currentUser.username}`);
+        navigate(`/profile/${response.username}`);
       })
       .catch((err) => {
         setRegistrationError(true);
@@ -47,7 +59,7 @@ export default function Register({ resetTopic }) {
       </div>
       <h1>Register</h1>
       <form onSubmit={handleRegister}>
-        <label for="username">Username: </label>
+        <label className="username">Username: </label>
         <input
           type="text"
           id="username"
@@ -56,7 +68,7 @@ export default function Register({ resetTopic }) {
           required
         />
         <br />
-        <label for="name">Name: </label>
+        <label className="name">Name: </label>
         <input
           type="text"
           id="name"
@@ -65,17 +77,17 @@ export default function Register({ resetTopic }) {
           required
         />
         <br />
-        <label for="avatar-url">Avatar URL: </label>
+        <label className="avatar-url">Avatar URL: </label>
         <input
           type="text"
           id="avatar-url"
           value={newUser.avatar_url}
           onChange={handleAvatarInput}
         />
-        <br />
+        {avatarError && <p>Please enter a valid URL.</p>}
+        {registrationError && <p>Username already exists.</p>}
         <button type="submit">Join us!</button>
       </form>
-      {registrationError ? <p>Username already exists.</p> : null}
       <div className="login-link">
         <Link to="/login">Already have an account?</Link>
       </div>

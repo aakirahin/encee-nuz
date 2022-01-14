@@ -88,6 +88,7 @@ export default function ArticlePage({
     patchArticleBody(articleID, editedArticle)
       .then((response) => {
         setEditArticle(false);
+        setArticle(response);
       })
       .catch((err) => {
         setEditError(true);
@@ -161,12 +162,14 @@ export default function ArticlePage({
             ) : (
               comments.map((comment, index) => {
                 return (
-                  <Comment
-                    comment={comment}
-                    comments={comments}
-                    setComments={setComments}
-                    index={index}
-                  />
+                  <li key={comment.comment_id}>
+                    <Comment
+                      comment={comment}
+                      comments={comments}
+                      setComments={setComments}
+                      index={index}
+                    />
+                  </li>
                 );
               })
             )}

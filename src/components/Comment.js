@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router";
 import { useState } from "react";
 import { useCurrentUser } from "../context/UserContext";
@@ -44,6 +44,7 @@ export default function Comment({
       }
     );
     setCommentVotesClick([...commentVotesClick, "clicked"]);
+    console.log(commentVotesClick);
   };
 
   const handleDeletion = () => {
@@ -82,7 +83,7 @@ export default function Comment({
   };
 
   return (
-    <li id="comment" key={comment.comment_id}>
+    <div id="comment">
       <p>
         <Link to={`/profile/${comment.author}`}>{comment.author} </Link>
         <i>{comment.created_at.substring(0, 9)} </i>
@@ -133,6 +134,6 @@ export default function Comment({
         </button>
         {commentVoteError && "Could not update comment votes."}
       </p>
-    </li>
+    </div>
   );
 }

@@ -8,7 +8,7 @@ import BackLink from "./BackLink";
 export default function Login({ resetTopic }) {
   const [username, setUsername] = useState("");
   const [loginError, setLoginError] = useState(false);
-  const { currentUser, setCurrentUser } = useCurrentUser();
+  const { setCurrentUser } = useCurrentUser();
   let navigate = useNavigate();
 
   const handleUsernameInput = (event) => {
@@ -21,7 +21,7 @@ export default function Login({ resetTopic }) {
     fetchUser(username)
       .then((response) => {
         setCurrentUser(response);
-        navigate(`/profile/${currentUser.username}`);
+        navigate(`/profile/${response.username}`);
       })
       .catch((err) => {
         setLoginError(true);
@@ -35,7 +35,7 @@ export default function Login({ resetTopic }) {
       </div>
       <h1>Welcome back!</h1>
       <form onSubmit={handleLogin}>
-        <label for="username">Username: </label>
+        <label className="username">Username: </label>
         <input
           type="text"
           id="username"
@@ -43,9 +43,9 @@ export default function Login({ resetTopic }) {
           onChange={handleUsernameInput}
           required
         />
+        {loginError ? <p>Username does not exist.</p> : null}
         <button type="submit">Let's gooo!</button>
       </form>
-      {loginError ? <p>Username does not exist.</p> : null}
       <div className="register-link">
         <Link to="/register">Don't have an account?</Link>
       </div>

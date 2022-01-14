@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { fetchArticlesByUser, fetchUser, patchUserAvatar } from "../utils";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router";
+import urlRegex from "url-regex";
 
 export default function Profile({ resetTopic }) {
   const { username } = useParams();
@@ -31,9 +32,16 @@ export default function Profile({ resetTopic }) {
 
   const changeAvatar = (event) => {
     event.preventDefault();
+
+    if (!urlRegex().test(newAvatar)) {
+      setAvatarError(true);
+      return;
+    }
+
     patchUserAvatar(currentUser.username, newAvatar).catch((err) => {
       setAvatarError(true);
     });
+
     setAvatarClicked(false);
   };
 
@@ -80,16 +88,18 @@ export default function Profile({ resetTopic }) {
       ) : null}
       <h2 id="name">{urlUser.name}</h2>
       <p id="username">{urlUser.username}</p>
-      <Link id="sign-out" to="/" onClick={logOut}>
-        Sign out
-      </Link>
+      {currentUser.username === urlUser.username && (
+        <Link id="sign-out" to="/" onClick={logOut}>
+          Sign out
+        </Link>
+      )}
       <h2>{urlUser.name}'s articles</h2>
       {userArticles.length !== 0 ? (
         <div id="user-articles">
           <ul>
             {userArticles.map((article) => {
               return (
-                <li className="user-article">
+                <li className="user-article" key={article.article_id}>
                   <Link to={`/articles/${article.article_id}`}>
                     <p>{article.title}</p>
                   </Link>

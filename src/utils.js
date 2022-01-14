@@ -52,7 +52,7 @@ export const patchArticleVotes = (articleID, vote) => {
 
 export const patchArticleBody = (articleID, body) => {
   return myApi.patch(`/articles/${articleID}`, { body: body }).then((res) => {
-    console.log(res);
+    return res.data.article;
   });
 };
 
