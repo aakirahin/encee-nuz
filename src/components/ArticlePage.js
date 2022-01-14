@@ -29,7 +29,7 @@ export default function ArticlePage({
   const [articleVotesClick, setArticleVotesClick] = useState([]);
   const [comments, setComments] = useState([]);
   const [editArticle, setEditArticle] = useState(false);
-  const [editedArticle, setEditedArticle] = useState(article.body);
+  const [editedArticle, setEditedArticle] = useState("");
   const { loggedIn, currentUser } = useCurrentUser();
   let navigate = useNavigate();
 
@@ -40,6 +40,7 @@ export default function ArticlePage({
         setArticle(response);
         setArticleDate(response.created_at.substring(0, 9));
         setArticleVotes(response.votes);
+        setEditedArticle(response.body);
         setIsLoading(false);
       })
       .catch((err) => {
@@ -120,15 +121,19 @@ export default function ArticlePage({
           {editArticle ? (
             <>
               <form onSubmit={submitArticleEdit}>
-                <input
+                <textarea
                   type="text"
                   id="edited-article"
                   value={editedArticle}
                   onChange={handleArticleEdit}
                 />
-                <button type="submit">Update</button>
+                <button id="update-article" type="submit">
+                  Update
+                </button>
               </form>
-              <button onClick={() => setEditArticle(false)}>Cancel</button>
+              <button id="cancel-edit" onClick={() => setEditArticle(false)}>
+                Cancel
+              </button>
             </>
           ) : (
             <p>{article.body}</p>

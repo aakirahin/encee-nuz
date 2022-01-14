@@ -51,9 +51,13 @@ export default function Profile({ resetTopic }) {
               value={newAvatar}
               onChange={(event) => setNewAvatar(event.target.value)}
             />
-            <button type="submit">Change avatar</button>
+            <button id="change-avatar" type="submit">
+              Change avatar
+            </button>
           </form>
-          <button onClick={() => setAvatarClicked(false)}>Cancel</button>
+          <button id="cancel-change" onClick={() => setAvatarClicked(false)}>
+            Cancel
+          </button>
         </>
       )}
       <h2 id="name">{currentUser.name}</h2>

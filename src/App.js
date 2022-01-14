@@ -7,6 +7,7 @@ import { fetchTopics } from "./utils";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Profile from "./components/Profile";
+import InvalidPath from "./components/InvalidPath";
 import { UserProvider } from "./context/UserContext";
 
 function App() {
@@ -77,11 +78,26 @@ function App() {
                 />
               }
             />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login resetTopic={resetTopic} />} />
+            <Route
+              path="/register"
+              element={<Register resetTopic={resetTopic} />}
+            />
             <Route
               path="/profile"
               element={<Profile resetTopic={resetTopic} />}
+            />
+            <Route
+              path="*"
+              element={
+                <InvalidPath
+                  topicsList={topicsList}
+                  setTopic={setTopic}
+                  filterQueries={filterQueries}
+                  setFilterQueries={setFilterQueries}
+                  resetTopic={resetTopic}
+                />
+              }
             />
           </Routes>
         </BrowserRouter>

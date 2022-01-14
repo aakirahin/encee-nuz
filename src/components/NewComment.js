@@ -49,7 +49,7 @@ export default function NewComment({ articleID, comments, setComments }) {
             width="50"
           />
         )}
-        <input
+        <textarea
           type="text"
           id="new-comment"
           value={newComment}

@@ -72,23 +72,35 @@ export default function Comment({ comment, comments, setComments }) {
         <i>{comment.created_at.substring(0, 9)} </i>
         {currentUser.username === comment.author ? (
           <>
-            <button onClick={() => setEdit(true)}>Edit</button>
-            <button onClick={handleDeletion}>Delete</button>
+            <button
+              id="edit-comment"
+              onClick={() => setEdit(true)}
+              disabled={edit}
+            >
+              Edit
+            </button>
+            <button id="delete-comment" onClick={handleDeletion}>
+              Delete
+            </button>
           </>
         ) : null}
       </p>
       {edit ? (
         <>
           <form onSubmit={editComment}>
-            <input
+            <textarea
               type="text"
               id="edited-comment"
               value={editedComment}
               onChange={handleCommentEdit}
             />
-            <button type="submit">Update</button>
+            <button id="update-comment" type="submit">
+              Update
+            </button>
           </form>
-          <button onClick={() => setEdit(false)}>Cancel</button>
+          <button id="cancel-comment" onClick={() => setEdit(false)}>
+            Cancel
+          </button>
         </>
       ) : (
         <p>{comment.body}</p>

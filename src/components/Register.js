@@ -4,8 +4,9 @@ import { useNavigate } from "react-router";
 import { fetchUser, postUser } from "../utils";
 import { Link } from "react-router-dom";
 import { useCurrentUser } from "../context/UserContext";
+import BackLink from "./BackLink";
 
-export default function Register(props) {
+export default function Register({ resetTopic }) {
   const [newUser, setNewUser] = useState({});
   const [registrationError, setRegistrationError] = useState(false);
   const { setCurrentUser } = useCurrentUser();
@@ -43,6 +44,9 @@ export default function Register(props) {
 
   return (
     <div id="register">
+      <div className="register-exit">
+        <BackLink resetTopic={resetTopic} />
+      </div>
       <h1>Register</h1>
       <form onSubmit={handleRegister}>
         <label for="username">Username: </label>

@@ -3,8 +3,9 @@ import { fetchUser } from "../utils";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router";
 import { useCurrentUser } from "../context/UserContext";
+import BackLink from "./BackLink";
 
-export default function Login(props) {
+export default function Login({ resetTopic }) {
   const [username, setUsername] = useState("");
   const [loginError, setLoginError] = useState(false);
   const { setCurrentUser } = useCurrentUser();
@@ -30,6 +31,9 @@ export default function Login(props) {
 
   return (
     <div id="login">
+      <div className="login-exit">
+        <BackLink resetTopic={resetTopic} />
+      </div>
       <h1>Welcome back!</h1>
       <form onSubmit={handleLogin}>
         <label for="username">Username: </label>

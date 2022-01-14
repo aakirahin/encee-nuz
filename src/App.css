@@ -86,10 +86,6 @@ a:active {
   margin-right: 10px;
 }
 
-#back {
-  margin-top: 10px;
-}
-
 .comments-section {
   border-top: 1px solid black;
 }
@@ -108,6 +104,10 @@ a:active {
 
 #profile #edit-message {
   display: none;
+}
+
+#profile img:hover {
+  opacity: 0.5;
 }
 
 .article .article-votes button,
@@ -130,10 +130,12 @@ a:active {
 
 #new-comment #comment-avatar {
   display: inline-block;
+  margin-right: 10px;
   border-radius: 50%;
 }
 
-#new-comment input {
+#new-comment input,
+#edited-comment {
   display: inline-block;
   width: 90%;
   height: 100px;
@@ -143,9 +145,13 @@ a:active {
   border-radius: 5px;
 }
 
-#new-comment button {
+#new-comment button,
+#edit-comment,
+#delete-comment,
+#update-comment,
+#cancel-comment {
   float: right;
-  margin: 5px 3%;
+  margin: 5px;
   border: 1px solid black;
   border-radius: 50px;
   background-color: white;
@@ -153,7 +159,16 @@ a:active {
   font-weight: bold;
 }
 
-#new-comment button:active {
+#new-comment button {
+  margin: 0 3%;
+}
+
+#new-comment button:active,
+#edit-comment:active,
+#edit-comment:disabled,
+#delete-comment:active,
+#update-comment:active,
+#cancel-comment:active {
   background-color: black;
   color: white;
 }
@@ -164,7 +179,7 @@ a:active {
 
 #edit-article {
   position: absolute;
-  top: 395px;
+  top: 335px;
   right: 50px;
   width: 50px;
   border: 1px solid black;
@@ -175,14 +190,63 @@ a:active {
   font-weight: bold;
 }
 
+#edited-article {
+  display: inline-block;
+  width: 94%;
+  height: 200px;
+  padding: 12px 20px;
+  margin: 5px 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+#update-article,
+#cancel-edit {
+  float: right;
+  margin-top: 5px;
+  border: 1px solid black;
+  border-radius: 50px;
+  background-color: black;
+  color: white;
+  line-height: 25px;
+  font-weight: bold;
+}
+
+#update-article {
+  margin-right: 3%;
+}
+
+#cancel-edit {
+  margin-right: 10px;
+}
+
+#update-article:active,
+#cancel-edit:active,
+#edit-article:active,
+#edit-article:disabled,
+#change-avatar:active,
+#cancel-change:active {
+  background-color: white;
+  color: black;
+}
+
 #login,
 #register {
   text-align: center;
 }
 
+#login {
+  margin-top: 200px;
+}
+
+#register {
+  margin-top: 150px;
+}
+
 #login h1,
 #register h1 {
-  margin-bottom: 15px;
+  font-size: 2.2rem;
+  margin-bottom: 20px;
 }
 
 #login button,
@@ -190,7 +254,7 @@ a:active {
   width: 35%;
   display: block;
   margin: auto;
-  margin-top: 10px;
+  margin-top: 20px;
   border: 1px solid black;
   background-color: black;
   color: white;
@@ -247,6 +311,38 @@ a:active {
   margin-bottom: 40px;
   border-bottom: 1px solid black;
 }
+
+#new-avatar {
+  display: inline-block;
+  width: 40%;
+  padding: 10px 10px;
+  margin: 10px 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+#change-avatar,
+#cancel-change {
+  line-height: 25px;
+  margin: 5px 0 0 5px;
+  border: transparent;
+  border-radius: 100px;
+  background-color: black;
+  color: white;
+  font-weight: bold;
+}
+
+#back {
+  margin-top: 10px;
+}
+
+.login-exit,
+.register-exit {
+  position: absolute;
+  left: 33px;
+  top: 95px;
+}
+
 @media only screen and (max-width: 500px) {
   #sidebar h3 {
     display: none;
@@ -384,6 +480,11 @@ a:active {
     right: 400px;
   }
 
+  #login h1,
+  #register h1 {
+    font-size: 3rem;
+  }
+
   #login button,
   #register button {
     width: 10%;
@@ -431,5 +532,16 @@ a:active {
 
   #profile #sign-out {
     top: 400px;
+  }
+
+  #new-avatar {
+    width: 25%;
+  }
+
+  .login-exit,
+  .register-exit {
+    position: absolute;
+    left: 100px;
+    top: 133px;
   }
 }
