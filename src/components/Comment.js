@@ -9,6 +9,9 @@ export default function Comment({ comment, comments, setComments }) {
   const [commentVotesClick, setCommentVotesClick] = useState([]);
   const [edit, setEdit] = useState(false);
   const [editedComment, setEditedComment] = useState(comment.body);
+  const [commentVoteError, setCommentVoteError] = useState(false);
+  const [commentEditError, setCommentEditError] = useState(false);
+  const [commentDeleteError, setCommentDeleteError] = useState(false);
   const { currentUser, loggedIn } = useCurrentUser();
   let navigate = useNavigate();
 
@@ -25,12 +28,12 @@ export default function Comment({ comment, comments, setComments }) {
     setCommentVotes((currentVotes) => currentVotes + inc_vote);
     patchCommentVotes(comment.comment_id, currentUser.username, inc_vote).catch(
       (err) => {
-        console.log(err);
         setCommentVotesClick((currentClicks) => {
           currentClicks.pop();
           return currentClicks;
         });
         setCommentVotes((currentVotes) => currentVotes - inc_vote);
+        setCommentVoteError(true);
       }
     );
     setCommentVotesClick([...commentVotesClick, "clicked"]);
@@ -39,14 +42,14 @@ export default function Comment({ comment, comments, setComments }) {
   const handleDeletion = () => {
     deleteComment(comment.comment_id)
       .then((response) => {
-        setComments((...currentComments) => {
-          return currentComments.filter(
-            (eachComment) => eachComment !== comment.comment_id
-          );
-        });
+        // setComments((...currentComments) => {
+        //   return currentComments.filter(
+        //     (eachComment) => eachComment !== comment.comment_id
+        //   );
+        // });
       })
       .catch((err) => {
-        console.log(err);
+        setCommentDeleteError(true);
       });
   };
 
@@ -61,7 +64,7 @@ export default function Comment({ comment, comments, setComments }) {
         setEdit(false);
       })
       .catch((err) => {
-        console.log(err);
+        setCommentEditError(true);
       });
   };
 
@@ -105,6 +108,8 @@ export default function Comment({ comment, comments, setComments }) {
       ) : (
         <p>{comment.body}</p>
       )}
+      {commentEditError && <p>Could not edit comment.</p>}
+      {commentDeleteError && <p>Could not delete comment.</p>}
       <p className="comment-votes">
         {commentVotes}{" "}
         <button
@@ -113,6 +118,7 @@ export default function Comment({ comment, comments, setComments }) {
         >
           Agreed!
         </button>
+        {commentVoteError && "Could not update comment votes."}
       </p>
     </li>
   );

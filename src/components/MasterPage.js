@@ -17,6 +17,7 @@ export default function MasterPage({
   resetTopic,
 }) {
   const [articlesList, setArticlesList] = useState([]);
+  const [articlesError, setArticlesError] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -31,7 +32,7 @@ export default function MasterPage({
         setArticlesList(response);
       })
       .catch((err) => {
-        console.log(err);
+        setArticlesError(true);
       });
   }, []);
 
@@ -76,6 +77,7 @@ export default function MasterPage({
           })}
         </ul>
       )}
+      {articlesError && <p>Could not load articles.</p>}
       <ScrollToTop />
     </div>
   );

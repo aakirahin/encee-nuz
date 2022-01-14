@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { fetchArticles } from "../utils";
 
 export default function Filter({
@@ -21,14 +21,10 @@ export default function Filter({
       filterQueries.topic,
       filterQueries.sort_by,
       filterQueries.order
-    )
-      .then((response) => {
-        setArticlesList(response);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    ).then((response) => {
+      setArticlesList(response);
+      setIsLoading(false);
+    });
   }, [filterQueries]);
 
   return (

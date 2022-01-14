@@ -15,18 +15,20 @@ export default function NewComment({ articleID, comments, setComments }) {
   };
 
   const handleNewComment = (event) => {
+    event.preventDefault();
+
     if (!loggedIn) {
       navigate("/login");
       return;
+    } else if (newComment === "" || newComment === " ") {
+      return;
     }
 
-    event.preventDefault();
     postComment(articleID, currentUser.username, newComment)
       .then((response) => {
         // setComments([response, ...comments]);
       })
       .catch((err) => {
-        console.log(err);
         setCommentError(true);
       });
   };
@@ -57,6 +59,7 @@ export default function NewComment({ articleID, comments, setComments }) {
         />
         <button type="submit">Comment</button>
       </form>
+      {commentError && <p>Could not post comment.</p>}
     </div>
   );
 }

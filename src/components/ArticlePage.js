@@ -28,6 +28,7 @@ export default function ArticlePage({
   const [articleVotes, setArticleVotes] = useState(0);
   const [articleVotesClick, setArticleVotesClick] = useState([]);
   const [comments, setComments] = useState([]);
+  const [commentsError, setCommentsError] = useState(false);
   const [editArticle, setEditArticle] = useState(false);
   const [editedArticle, setEditedArticle] = useState("");
   const { loggedIn, currentUser } = useCurrentUser();
@@ -44,14 +45,14 @@ export default function ArticlePage({
         setIsLoading(false);
       })
       .catch((err) => {
-        console.log(err);
+        navigate("*");
       });
     fetchArticleComments(articleID)
       .then((response) => {
         setComments(response);
       })
       .catch((err) => {
-        console.log(err);
+        setCommentsError(true);
       });
   }, []);
 
@@ -155,15 +156,19 @@ export default function ArticlePage({
               comments={comments}
               setComments={setComments}
             />
-            {comments.map((comment) => {
-              return (
-                <Comment
-                  comment={comment}
-                  comments={comments}
-                  setComments={setComments}
-                />
-              );
-            })}
+            {commentsError ? (
+              <p>Could not load comments.</p>
+            ) : (
+              comments.map((comment) => {
+                return (
+                  <Comment
+                    comment={comment}
+                    comments={comments}
+                    setComments={setComments}
+                  />
+                );
+              })
+            )}
           </ul>
         </div>
       )}

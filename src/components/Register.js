@@ -35,7 +35,6 @@ export default function Register({ resetTopic }) {
         setCurrentUser(response);
       })
       .catch((err) => {
-        console.log(err);
         setRegistrationError(true);
       });
 

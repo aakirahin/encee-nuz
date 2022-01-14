@@ -9,6 +9,8 @@ export default function Profile({ resetTopic }) {
   const [userArticles, setUserArticles] = useState([]);
   const [avatarClicked, setAvatarClicked] = useState(false);
   const [newAvatar, setNewAvatar] = useState("");
+  const [avatarError, setAvatarError] = useState(false);
+  const [userError, setUserError] = useState(false);
   const { currentUser, logOut } = useCurrentUser();
 
   useEffect(() => {
@@ -17,19 +19,21 @@ export default function Profile({ resetTopic }) {
         setUserArticles(response);
       })
       .catch((err) => {
-        console.log(err);
+        setUserError(true);
       });
   }, [currentUser]);
 
   const changeAvatar = (event) => {
     event.preventDefault();
     patchUserAvatar(currentUser.username, newAvatar).catch((err) => {
-      console.log(err);
+      setAvatarError(true);
     });
     setAvatarClicked(false);
   };
 
-  return (
+  return userError ? (
+    <p>Could not load user.</p>
+  ) : (
     <div id="profile">
       <BackLink resetTopic={resetTopic} />
       <img
@@ -60,6 +64,7 @@ export default function Profile({ resetTopic }) {
           </button>
         </>
       )}
+      {avatarError && <p>Could not update avatar.</p>}
       <h2 id="name">{currentUser.name}</h2>
       <p id="username">{currentUser.username}</p>
       <Link id="sign-out" to="/" onClick={logOut}>

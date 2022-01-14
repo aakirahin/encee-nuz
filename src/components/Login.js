@@ -23,7 +23,6 @@ export default function Login({ resetTopic }) {
         setCurrentUser(response);
       })
       .catch((err) => {
-        console.log(err);
         setLoginError(true);
       });
     navigate("/profile");

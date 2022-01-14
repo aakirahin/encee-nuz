@@ -14,7 +14,7 @@ export default function SideBar({
     <div id="sidebar">
       {loggedIn ? (
         <div className="sidebar-profile">
-          <Link to="/profile">
+          <Link to="/profile/">
             <img
               className="avatar"
               src={currentUser.avatar_url}

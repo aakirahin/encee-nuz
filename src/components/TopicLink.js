@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 
 export default function TopicLink({
   topic,
@@ -7,8 +7,6 @@ export default function TopicLink({
   filterQueries,
   setFilterQueries,
 }) {
-  let navigate = useNavigate();
-
   const selectTopic = (event) => {
     event.preventDefault();
     setTopic(topic);
@@ -17,12 +15,11 @@ export default function TopicLink({
       slug: topic.slug.charAt(0).toUpperCase() + topic.slug.slice(1),
     });
     setFilterQueries({ ...filterQueries, topic: topic.slug });
-    navigate("/");
   };
 
   return (
-    <a href="" onClick={selectTopic}>
+    <Link to="/" onClick={selectTopic}>
       <li>{topic.slug.charAt(0).toUpperCase() + topic.slug.slice(1)}</li>
-    </a>
+    </Link>
   );
 }
