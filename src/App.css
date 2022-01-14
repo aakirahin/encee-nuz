@@ -106,8 +106,21 @@ a:active {
   display: none;
 }
 
-#profile img:hover {
+#profile .avatar:hover {
   opacity: 0.5;
+}
+
+#profile .avatar:hover + #edit-message,
+#profile .avatar:active + #edit-message {
+  display: block;
+  position: absolute;
+  top: 175px;
+  left: 60px;
+}
+
+#edit-message {
+  font-weight: bold;
+  font-size: 1.8rem;
 }
 
 .article .article-votes button,
@@ -460,8 +473,14 @@ a:active {
     font-weight: bold;
   }
 
-  #profile .avatar:hover + #edit-message {
-    display: block;
+  #profile .avatar:hover + #edit-message,
+  #profile .avatar:active + #edit-message {
+    top: 340px;
+    left: 230px;
+  }
+
+  #edit-message {
+    font-size: 3rem;
   }
 
   .article .article-votes button,
