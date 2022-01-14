@@ -19,12 +19,21 @@ export const fetchTopics = () => {
 export const fetchArticles = (
   slug = "",
   sort_by = "created_at",
-  order = "desc"
+  order = "desc",
+  title
 ) => {
   return myApi
     .get(`/articles?sort_by=${sort_by}&order=${order}&topic=${slug}`)
     .then((res) => {
+      if (title !== "") {
+        return res.data.articles.filter((article) => {
+          return article.title.toLowerCase().includes(title.toLowerCase());
+        });
+      }
       return res.data.articles;
+    })
+    .then((articles) => {
+      return articles;
     });
 };
 

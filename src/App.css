@@ -37,8 +37,12 @@ ul {
 }
 
 #sidebar h3 {
-  margin: 35px 0 0 0;
+  margin: 10px 0 0 0;
   padding-bottom: 0px;
+}
+
+#sidebar #search-bar {
+  margin-top: 10px;
 }
 
 #sidebar p {
@@ -277,7 +281,8 @@ a:active {
 }
 
 #login button:active,
-#register button:active {
+#register button:active,
+#search-bar button:active {
   background-color: white;
   border: transparent;
   color: black;
@@ -356,6 +361,23 @@ a:active {
   top: 95px;
 }
 
+#search-bar input {
+  display: inline-block;
+  line-height: 25px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+#search-bar button {
+  margin: 5px;
+  border: 1px solid black;
+  border-radius: 50px;
+  background-color: black;
+  color: white;
+  line-height: 25px;
+  font-weight: bold;
+}
+
 @media only screen and (max-width: 500px) {
   #sidebar h3 {
     display: none;
@@ -363,7 +385,7 @@ a:active {
 
   #sidebar li {
     display: inline-block;
-    margin: 0 25px 0 25px;
+    margin: 0 8% 0 8%;
   }
 
   #sidebar .sidebar-profile p,
@@ -381,8 +403,21 @@ a:active {
     margin: 20px 0 10px 0;
   }
 
+  #sidebar #user-options {
+    margin: 20px 0 0 25px;
+  }
+
+  #user-options p {
+    display: inline-block;
+    margin: 0 14% 0 14%;
+  }
+
   #scroll-to-top {
     display: none;
+  }
+
+  #search-bar {
+    margin-left: 15%;
   }
 }
 
@@ -442,7 +477,7 @@ a:active {
   }
 
   #sidebar {
-    width: 120px;
+    width: 175px;
     top: 200px;
     right: 150px;
   }
@@ -457,7 +492,7 @@ a:active {
   }
 
   #articles-list li {
-    width: 85%;
+    width: 80%;
   }
 
   #articles h2 {
@@ -562,5 +597,17 @@ a:active {
     position: absolute;
     left: 100px;
     top: 133px;
+  }
+
+  #sidebar #search-bar {
+    margin-top: 20px;
+  }
+
+  #sidebar #search-bar input {
+    width: 95px;
+  }
+
+  #sidebar #search-bar button {
+    display: inline-block;
   }
 }

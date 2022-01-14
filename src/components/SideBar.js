@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
 import { useCurrentUser } from "../context/UserContext";
 import TopicLink from "./TopicLink";
+import SearchBar from "./SearchBar";
 
 export default function SideBar({
   topicsList,
@@ -8,6 +10,7 @@ export default function SideBar({
   filterQueries,
   setFilterQueries,
 }) {
+  const [searchTerm, setSearchTerm] = useState("");
   const { currentUser, loggedIn, logOut } = useCurrentUser();
 
   return (
@@ -28,16 +31,21 @@ export default function SideBar({
           </Link>
         </div>
       ) : (
-        <>
+        <div id="user-options">
           <Link to="/login">
             <p>Sign In</p>
           </Link>
           <Link to="/register">
             <p>Sign Up</p>
           </Link>
-        </>
+        </div>
       )}
-
+      <SearchBar
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        filterQueries={filterQueries}
+        setFilterQueries={setFilterQueries}
+      />
       <h3>Topics</h3>
       <ul>
         {topicsList.map((topic, index) => {
@@ -48,6 +56,7 @@ export default function SideBar({
                 setTopic={setTopic}
                 filterQueries={filterQueries}
                 setFilterQueries={setFilterQueries}
+                setSearchTerm={setSearchTerm}
               />
             </li>
           );

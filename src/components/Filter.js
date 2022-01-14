@@ -20,7 +20,8 @@ export default function Filter({
     fetchArticles(
       filterQueries.topic,
       filterQueries.sort_by,
-      filterQueries.order
+      filterQueries.order,
+      filterQueries.title
     ).then((response) => {
       setArticlesList(response);
       setIsLoading(false);

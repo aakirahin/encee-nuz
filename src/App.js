@@ -18,6 +18,7 @@ function App() {
     sort_by: "created_at",
     order: "desc",
     topic: "",
+    title: "",
   });
 
   var today = new Date();

@@ -25,7 +25,8 @@ export default function MasterPage({
     fetchArticles(
       filterQueries.topic,
       filterQueries.sort_by,
-      filterQueries.order
+      filterQueries.order,
+      filterQueries.title
     )
       .then((response) => {
         setIsLoading(false);
@@ -34,7 +35,7 @@ export default function MasterPage({
       .catch((err) => {
         setArticlesError(true);
       });
-  }, []);
+  }, [filterQueries]);
 
   return (
     <div id="articles">
