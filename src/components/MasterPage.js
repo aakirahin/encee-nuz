@@ -65,7 +65,7 @@ export default function MasterPage({
         <ul id="articles-list">
           {articlesList.map((article) => {
             return (
-              <li>
+              <li key={article.article_id}>
                 <Link to={`/articles/${article.article_id}`}>
                   <p>{article.title}</p>
                 </Link>

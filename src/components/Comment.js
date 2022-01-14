@@ -4,7 +4,13 @@ import { useState } from "react/cjs/react.development";
 import { useCurrentUser } from "../context/UserContext";
 import { patchCommentVotes, deleteComment, patchCommentBody } from "../utils";
 
-export default function Comment({ comment, comments, setComments }) {
+export default function Comment({
+  comment,
+  comments,
+  setComments,
+  setCommentsChange,
+  index,
+}) {
   const [commentVotes, setCommentVotes] = useState(comment.votes);
   const [commentVotesClick, setCommentVotesClick] = useState([]);
   const [edit, setEdit] = useState(false);
@@ -42,11 +48,11 @@ export default function Comment({ comment, comments, setComments }) {
   const handleDeletion = () => {
     deleteComment(comment.comment_id)
       .then((response) => {
-        // setComments((...currentComments) => {
-        //   return currentComments.filter(
-        //     (eachComment) => eachComment !== comment.comment_id
-        //   );
-        // });
+        setComments([
+          ...comments.slice(0, index),
+          ...comments.slice(index + 1),
+        ]);
+        setCommentsChange(true);
       })
       .catch((err) => {
         setCommentDeleteError(true);
@@ -61,7 +67,13 @@ export default function Comment({ comment, comments, setComments }) {
     event.preventDefault();
     patchCommentBody(comment.comment_id, currentUser.username, editedComment)
       .then((response) => {
+        setComments([
+          ...comments.slice(0, index),
+          response,
+          ...comments.slice(index + 1),
+        ]);
         setEdit(false);
+        setCommentsChange(true);
       })
       .catch((err) => {
         setCommentEditError(true);
@@ -69,7 +81,7 @@ export default function Comment({ comment, comments, setComments }) {
   };
 
   return (
-    <li id="comment">
+    <li id="comment" key={comment.comment_id}>
       <p>
         <strong>{comment.author} </strong>
         <i>{comment.created_at.substring(0, 9)} </i>

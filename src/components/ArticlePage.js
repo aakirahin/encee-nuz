@@ -29,8 +29,10 @@ export default function ArticlePage({
   const [articleVotesClick, setArticleVotesClick] = useState([]);
   const [comments, setComments] = useState([]);
   const [commentsError, setCommentsError] = useState(false);
+  const [commentsChange, setCommentsChange] = useState(false);
   const [editArticle, setEditArticle] = useState(false);
   const [editedArticle, setEditedArticle] = useState("");
+  const [editError, setEditError] = useState(false);
   const { loggedIn, currentUser } = useCurrentUser();
   let navigate = useNavigate();
 
@@ -54,9 +56,9 @@ export default function ArticlePage({
       .catch((err) => {
         setCommentsError(true);
       });
-  }, []);
+  }, [commentsChange === true]);
 
-  const handleArticleVotes = (event) => {
+  const handleArticleVotes = () => {
     if (!loggedIn) {
       navigate("/login");
       return;
@@ -68,7 +70,6 @@ export default function ArticlePage({
     }
     setArticleVotes((currentVotes) => currentVotes + inc_vote);
     patchArticleVotes(articleID, inc_vote).catch((err) => {
-      console.log(err);
       setArticleVotesClick((currentClicks) => {
         currentClicks.pop();
         return currentClicks;
@@ -89,7 +90,7 @@ export default function ArticlePage({
         setEditArticle(false);
       })
       .catch((err) => {
-        console.log(err);
+        setEditError(true);
       });
   };
 
@@ -139,7 +140,7 @@ export default function ArticlePage({
           ) : (
             <p>{article.body}</p>
           )}
-          <br />
+          {editError && <p>Could not update article.</p>}
           <div className="article-votes">
             <strong>{articleVotes} </strong>
             <button
@@ -153,18 +154,18 @@ export default function ArticlePage({
             <h3>Comments • {article.comment_count}</h3>
             <NewComment
               articleID={articleID}
-              comments={comments}
-              setComments={setComments}
+              setCommentsChange={setCommentsChange}
             />
             {commentsError ? (
               <p>Could not load comments.</p>
             ) : (
-              comments.map((comment) => {
+              comments.map((comment, index) => {
                 return (
                   <Comment
                     comment={comment}
                     comments={comments}
                     setComments={setComments}
+                    index={index}
                   />
                 );
               })

@@ -19,7 +19,7 @@ export default function TopicLink({
 
   return (
     <Link to="/" onClick={selectTopic}>
-      <li>{topic.slug.charAt(0).toUpperCase() + topic.slug.slice(1)}</li>
+      {topic.slug.charAt(0).toUpperCase() + topic.slug.slice(1)}
     </Link>
   );
 }

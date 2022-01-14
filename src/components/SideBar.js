@@ -40,14 +40,16 @@ export default function SideBar({
 
       <h3>Topics</h3>
       <ul>
-        {topicsList.map((topic) => {
+        {topicsList.map((topic, index) => {
           return (
-            <TopicLink
-              topic={topic}
-              setTopic={setTopic}
-              filterQueries={filterQueries}
-              setFilterQueries={setFilterQueries}
-            />
+            <li key={`${index}${topic.slug}`}>
+              <TopicLink
+                topic={topic}
+                setTopic={setTopic}
+                filterQueries={filterQueries}
+                setFilterQueries={setFilterQueries}
+              />
+            </li>
           );
         })}
       </ul>

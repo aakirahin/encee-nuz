@@ -51,7 +51,9 @@ export const patchArticleVotes = (articleID, vote) => {
 };
 
 export const patchArticleBody = (articleID, body) => {
-  return myApi.patch(`/articles/${articleID}`, { body: body });
+  return myApi.patch(`/articles/${articleID}`, { body: body }).then((res) => {
+    console.log(res);
+  });
 };
 
 export const patchCommentVotes = (commentID, username, vote) => {
@@ -62,10 +64,14 @@ export const patchCommentVotes = (commentID, username, vote) => {
 };
 
 export const patchCommentBody = (commentID, username, body) => {
-  return myApi.patch(`/comments/${commentID}`, {
-    username: username,
-    body: body,
-  });
+  return myApi
+    .patch(`/comments/${commentID}`, {
+      username: username,
+      body: body,
+    })
+    .then((res) => {
+      return res.data.comment;
+    });
 };
 
 export const patchUserAvatar = (username, avatar_url) => {
