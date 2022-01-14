@@ -2,10 +2,13 @@ import React from "react";
 import BackLink from "./BackLink";
 import { useCurrentUser } from "../context/UserContext";
 import { useState, useEffect } from "react";
-import { fetchArticlesByUser, patchUserAvatar } from "../utils";
+import { fetchArticlesByUser, fetchUser, patchUserAvatar } from "../utils";
 import { Link } from "react-router-dom";
+import { useParams } from "react-router";
 
 export default function Profile({ resetTopic }) {
+  const { username } = useParams();
+  const [urlUser, setURLUser] = useState({});
   const [userArticles, setUserArticles] = useState([]);
   const [avatarClicked, setAvatarClicked] = useState(false);
   const [newAvatar, setNewAvatar] = useState("");
@@ -14,14 +17,17 @@ export default function Profile({ resetTopic }) {
   const { currentUser, logOut } = useCurrentUser();
 
   useEffect(() => {
-    fetchArticlesByUser(currentUser.username)
+    fetchUser(username).then((response) => {
+      setURLUser(response);
+    });
+    fetchArticlesByUser(username)
       .then((response) => {
         setUserArticles(response);
       })
       .catch((err) => {
         setUserError(true);
       });
-  }, [currentUser]);
+  }, [username]);
 
   const changeAvatar = (event) => {
     event.preventDefault();
@@ -38,41 +44,48 @@ export default function Profile({ resetTopic }) {
       <BackLink resetTopic={resetTopic} />
       <img
         className="avatar"
-        src={currentUser.avatar_url}
+        src={urlUser.avatar_url}
         alt="avatar"
         width="200"
         onClick={() => {
           setAvatarClicked(true);
         }}
       />
-      <div id="edit-message">Edit</div>
-      {avatarClicked && (
+      {currentUser.username === urlUser.username ? (
         <>
-          <form onSubmit={changeAvatar}>
-            <input
-              type="text"
-              id="new-avatar"
-              value={newAvatar}
-              onChange={(event) => setNewAvatar(event.target.value)}
-            />
-            <button id="change-avatar" type="submit">
-              Change avatar
-            </button>
-          </form>
-          <button id="cancel-change" onClick={() => setAvatarClicked(false)}>
-            Cancel
-          </button>
+          <div id="edit-message">Edit</div>
+          {avatarClicked && (
+            <>
+              <form onSubmit={changeAvatar}>
+                <input
+                  type="text"
+                  id="new-avatar"
+                  value={newAvatar}
+                  onChange={(event) => setNewAvatar(event.target.value)}
+                />
+                <button id="change-avatar" type="submit">
+                  Change avatar
+                </button>
+              </form>
+              <button
+                id="cancel-change"
+                onClick={() => setAvatarClicked(false)}
+              >
+                Cancel
+              </button>
+            </>
+          )}
+          {avatarError && <p>Could not update avatar.</p>}
         </>
-      )}
-      {avatarError && <p>Could not update avatar.</p>}
-      <h2 id="name">{currentUser.name}</h2>
-      <p id="username">{currentUser.username}</p>
+      ) : null}
+      <h2 id="name">{urlUser.name}</h2>
+      <p id="username">{urlUser.username}</p>
       <Link id="sign-out" to="/" onClick={logOut}>
         Sign out
       </Link>
+      <h2>{urlUser.name}'s articles</h2>
       {userArticles.length !== 0 ? (
         <div id="user-articles">
-          <h2>Your articles</h2>
           <ul>
             {userArticles.map((article) => {
               return (
@@ -89,7 +102,7 @@ export default function Profile({ resetTopic }) {
           </ul>
         </div>
       ) : (
-        <p>You haven't written anything yet...</p>
+        <p>Nothing here yet...</p>
       )}
     </div>
   );

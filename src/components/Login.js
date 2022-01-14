@@ -8,7 +8,7 @@ import BackLink from "./BackLink";
 export default function Login({ resetTopic }) {
   const [username, setUsername] = useState("");
   const [loginError, setLoginError] = useState(false);
-  const { setCurrentUser } = useCurrentUser();
+  const { currentUser, setCurrentUser } = useCurrentUser();
   let navigate = useNavigate();
 
   const handleUsernameInput = (event) => {
@@ -21,11 +21,11 @@ export default function Login({ resetTopic }) {
     fetchUser(username)
       .then((response) => {
         setCurrentUser(response);
+        navigate(`/profile/${currentUser.username}`);
       })
       .catch((err) => {
         setLoginError(true);
       });
-    navigate("/profile");
   };
 
   return (

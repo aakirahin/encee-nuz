@@ -84,7 +84,7 @@ function App() {
               element={<Register resetTopic={resetTopic} />}
             />
             <Route
-              path="/profile"
+              path="/profile/:username"
               element={<Profile resetTopic={resetTopic} />}
             />
             <Route

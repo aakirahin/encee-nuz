@@ -9,7 +9,7 @@ import BackLink from "./BackLink";
 export default function Register({ resetTopic }) {
   const [newUser, setNewUser] = useState({});
   const [registrationError, setRegistrationError] = useState(false);
-  const { setCurrentUser } = useCurrentUser();
+  const { currentUser, setCurrentUser } = useCurrentUser();
   let navigate = useNavigate();
 
   const handleUsernameInput = (event) => {
@@ -33,12 +33,11 @@ export default function Register({ resetTopic }) {
       })
       .then((response) => {
         setCurrentUser(response);
+        navigate(`/profile/${currentUser.username}`);
       })
       .catch((err) => {
         setRegistrationError(true);
       });
-
-    navigate("/profile");
   };
 
   return (

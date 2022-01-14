@@ -1,8 +1,9 @@
 import React from "react";
 import { useNavigate } from "react-router";
-import { useState } from "react/cjs/react.development";
+import { useState } from "react";
 import { useCurrentUser } from "../context/UserContext";
 import { patchCommentVotes, deleteComment, patchCommentBody } from "../utils";
+import { Link } from "react-router-dom";
 
 export default function Comment({
   comment,
@@ -83,7 +84,7 @@ export default function Comment({
   return (
     <li id="comment" key={comment.comment_id}>
       <p>
-        <strong>{comment.author} </strong>
+        <Link to={`/profile/${comment.author}`}>{comment.author} </Link>
         <i>{comment.created_at.substring(0, 9)} </i>
         {currentUser.username === comment.author ? (
           <>
