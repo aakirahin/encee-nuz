@@ -5,7 +5,6 @@ import { fetchUser, postUser } from "../utils";
 import { Link } from "react-router-dom";
 import { useCurrentUser } from "../context/UserContext";
 import BackLink from "./BackLink";
-import urlRegex from "url-regex";
 
 export default function Register({ resetTopic }) {
   const [newUser, setNewUser] = useState({
@@ -14,7 +13,6 @@ export default function Register({ resetTopic }) {
     avatar_url: "",
   });
   const [registrationError, setRegistrationError] = useState(false);
-  const [avatarError, setAvatarError] = useState(false);
   const { setCurrentUser } = useCurrentUser();
   let navigate = useNavigate();
 
@@ -28,16 +26,11 @@ export default function Register({ resetTopic }) {
   };
 
   const handleAvatarInput = (event) => {
-    setAvatarError(false);
     setNewUser({ ...newUser, avatar_url: event.target.value });
   };
 
   const handleRegister = (event) => {
     event.preventDefault();
-
-    if (!urlRegex().test(event.target.value)) {
-      setAvatarError(true);
-    }
 
     postUser(newUser.username, newUser.name, newUser.avatar_url)
       .then((response) => {
@@ -84,7 +77,6 @@ export default function Register({ resetTopic }) {
           value={newUser.avatar_url}
           onChange={handleAvatarInput}
         />
-        {avatarError && <p>Please enter a valid URL.</p>}
         {registrationError && <p>Username already exists.</p>}
         <button type="submit">Join us!</button>
       </form>

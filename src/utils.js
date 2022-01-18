@@ -84,7 +84,11 @@ export const patchCommentBody = (commentID, username, body) => {
 };
 
 export const patchUserAvatar = (username, avatar_url) => {
-  return myApi.patch(`/users/${username}`, { avatar_url: avatar_url });
+  return myApi
+    .patch(`/users/${username}`, { avatar_url: avatar_url })
+    .then((res) => {
+      return res.data.user;
+    });
 };
 
 export const deleteComment = (commentID) => {

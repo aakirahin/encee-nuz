@@ -15,7 +15,7 @@ export default function Profile({ resetTopic }) {
   const [newAvatar, setNewAvatar] = useState("");
   const [avatarError, setAvatarError] = useState(false);
   const [userError, setUserError] = useState(false);
-  const { currentUser, logOut } = useCurrentUser();
+  const { currentUser, setCurrentUser, logOut } = useCurrentUser();
 
   useEffect(() => {
     fetchUser(username).then((response) => {
@@ -38,9 +38,14 @@ export default function Profile({ resetTopic }) {
       return;
     }
 
-    patchUserAvatar(currentUser.username, newAvatar).catch((err) => {
-      setAvatarError(true);
-    });
+    patchUserAvatar(currentUser.username, newAvatar)
+      .then((response) => {
+        setURLUser({ ...urlUser, avatar_url: response.avatar_url });
+        setCurrentUser({ ...currentUser, avatar_url: response.avatar_url });
+      })
+      .catch((err) => {
+        setAvatarError(true);
+      });
 
     setAvatarClicked(false);
   };
