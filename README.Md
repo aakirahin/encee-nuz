@@ -1,4 +1,4 @@
-Link to deployed version: https://61e45df2af98a23ced87e132--vigilant-montalcini-aa4aab.netlify.app/
+Link to deployed version: https://encee-nuz.netlify.app/
 
 Link to backend repo: https://github.com/aakirahin/ncnews
 
