@@ -1,9 +1,12 @@
+import { useNavigate } from "react-router";
+
 export default function SearchBar({
   searchTerm,
   setSearchTerm,
   filterQueries,
   setFilterQueries,
 }) {
+  let navigate = useNavigate();
   const handleSearchTermInput = (event) => {
     setSearchTerm(event.target.value);
   };
@@ -11,6 +14,7 @@ export default function SearchBar({
   const handleSearch = (event) => {
     event.preventDefault();
     setFilterQueries({ ...filterQueries, title: searchTerm });
+    navigate("/");
   };
 
   return (
