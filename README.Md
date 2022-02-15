@@ -8,7 +8,7 @@ Version of Node required to run this app locally: v17.1.0
 
 ## About
 
-Encee-Nuz is an online news platform, where users can comment on or vote for articles. Functions on this app were made possible by CRUD operations.
+Encee-Nuz is an online news platform, where users can comment on or vote for articles.
 
 ## How to run this app locally
 
