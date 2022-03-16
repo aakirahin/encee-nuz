@@ -31,6 +31,7 @@ export default function NewComment({ articleID, setCommentsChange }) {
       .catch((err) => {
         setCommentError(true);
       });
+    setCommentsChange(false);
   };
 
   return (

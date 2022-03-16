@@ -429,8 +429,9 @@ a:active {
   #sidebar {
     position: fixed;
     width: 100px;
-    top: 150px;
     right: 5px;
+    top: 150px;
+    margin-right: 5%;
   }
 
   #sidebar a {
@@ -441,12 +442,16 @@ a:active {
     padding-bottom: 4px;
   }
 
+  #search-bar input {
+    width: 100px;
+  }
+
   .article {
     width: 75%;
   }
 
   #articles-list li {
-    width: 120%;
+    width: 80%;
   }
 
   #scroll-to-top {
@@ -479,7 +484,6 @@ a:active {
   #sidebar {
     width: 175px;
     top: 200px;
-    right: 150px;
   }
 
   a:hover {
@@ -488,11 +492,11 @@ a:active {
   }
 
   .article {
-    width: 85%;
+    width: 75%;
   }
 
   #articles-list li {
-    width: 80%;
+    width: 75%;
   }
 
   #articles h2 {

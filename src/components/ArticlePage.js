@@ -46,7 +46,7 @@ export default function ArticlePage({
         setEditedArticle(response.body);
         setIsLoading(false);
       })
-      .catch((err) => {
+      .catch(() => {
         navigate("*");
       });
     fetchArticleComments(articleID)
